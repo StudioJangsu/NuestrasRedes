@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jangsu Studio | Conecta</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;600;800&family=Playfair+Display:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --accent: #333333;
+            --card-bg: #111111;
+            --font-main: 'Manrope', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            position: relative; /* Necesario para el posicionamiento del CTA en desktop */
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            width: 5px; height: 5px;
+            background-color: var(--text);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            width: 30px; height: 30px;
+            border: 1px solid var(--text);
+            border-radius: 50%;
+            z-index: 9998;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+
+        .logo-text { 
+            font-weight: 800; 
+            font-size: 2rem; 
+            letter-spacing: -1px;
+            display: block;
+        }
+        .logo-studio { 
+            font-family: var(--font-mono); 
+            font-size: 0.9rem; 
+            opacity: 0.6;
+            letter-spacing: 2px;
+        }
+
+        /* Profile Section */
+        .profile-info {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .headline {
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .serif {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        /* Links Container */
+        .links-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 2;
+        }
+
+        .link-card {
+            background: var(--card-bg);
+            border: 1px solid var(--accent);
+            padding: 20px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .link-card:hover {
+            background: var(--text);
+            color: var(--bg);
+            transform: translateY(-3px);
+        }
+
+        /* --- CTA Section (Estilo Grafiti / Nota) --- */
+        .cta-box {
+            margin-top: 60px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            padding: 25px;
+            border: 1px dashed var(--accent); /* Estilo nota */
+            position: relative;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        .cta-text {
+            font-family: var(--font-mono); /* Fuente técnica para el look grafiti */
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--text);
+            color: var(--bg);
+            padding: 10px 20px;
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 800;
+            font-size: 0.7rem;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        /* Media Query para Escritorio (Desktop) */
+        @media (min-width: 1024px) {
+            .cta-box {
+                position: absolute;
+                top: 40%;
+                right: 5vw; /* Lo manda a un lado */
+                margin-top: 0;
+                transform: rotate(5deg); /* Efecto grafiti torcido */
+                border: 1px solid var(--text);
+                background: rgba(255,255,255,0.02);
+                max-width: 250px;
+                box-shadow: 10px 10px 0px var(--accent);
+            }
+            
+            .cta-box::before {
+                content: "HEY!";
+                position: absolute;
+                top: -20px;
+                left: -10px;
+                background: var(--text);
+                color: var(--bg);
+                font-family: var(--font-mono);
+                padding: 2px 8px;
+                font-size: 0.7rem;
+            }
+
+            .arrow {
+                transform: rotate(-90deg); /* La flecha apunta a los links */
+                animation: bounceSide 2s infinite;
+                position: absolute;
+                left: -40px;
+                top: 50%;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        @keyframes bounceSide {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(0) rotate(-90deg);}
+            40% {transform: translateX(-10px) rotate(-90deg);}
+            60% {transform: translateX(-5px) rotate(-90deg);}
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <header>
+        <span class="logo-text">JANGSU</span>
+        <span class="logo-studio">STUDIO</span>
+    </header>
+
+    <div class="profile-info">
+        <h1 class="headline">Nuestras <span class="serif">Redes Sociales</span></h1>
+    </div>
+
+    <nav class="links-container">
+        <a href="https://studiojangsu.github.io/OficialPage/" class="link-card">PAGINA WEB</a>
+        <a href="https://www.instagram.com/studiojangsu/" class="link-card">INSTAGRAM</a>
+        <a href="https://www.tiktok.com/@jangsustudio" class="link-card">TIKTOK</a>
+    </nav>
+
+    <section class="cta-box">
+        <span class="arrow">↓</span>
+        <p class="cta-text">¿Te interesa presentar tus <b>redes</b> así?<br>Nosotros lo hacemos realidad con tu estilo.</p>
+        <a href="https://www.instagram.com/studiojangsu" class="cta-button">HABLEMOS</a>
+    </section>
+
+    <footer>
+        JANGSU STUDIO © 2026 | COATEPEQUE, GT
+    </footer>
+
+    <script>
+        const dot = document.getElementById("cursor-dot");
+        const outline = document.getElementById("cursor-outline");
+
+        window.addEventListener("mousemove", (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            dot.style.left = `${posX}px`;
+            dot.style.top = `${posY}px`;
+
+            outline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+    </script>
+</body>
+</html>
